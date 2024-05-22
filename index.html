@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(6, 58, 155);
+            margin-top: 3%;
+        }
+
+        h2 {
+            color: rgba(10, 46, 114, 0.637);
+
+        }
+
+        label {
+            color: rgb(6, 54, 94);
+        }
+
+        input {
+            margin: 15px 0px;
+            background-color: white;
+            width: 90% !important;
+            border: 1px solid rgba(0, 0, 0, 0.267);
+            font-size: 0.9em;
+            height: 30px;
+            display: block;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: rgba(12, 17, 92, 0.589);
+            padding: 10px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            margin: 10px 0px;
+        }
+
+        #flex {
+            display: flex;
+            padding: 20px 80px;
+            width: 75%;
+            margin: auto;
+        }
+
+        #flex>div {
+            width: 50%;
+            background-color: white;
+        }
+
+        #form {
+            box-shadow: 1px 1px 2px 2px rgb(202, 197, 197);
+            padding: 30px;
+            margin-right: 50px;
+            width: 35%;
+        }
+
+
+        #total {
+            width: 40%;
+
+            box-shadow: 1px 1px 2px 2px gainsboro;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #table {
+            margin: 20px auto !important;
+            width: 80%;
+        }
+
+        #table td,
+        th {
+            text-align: center;
+            padding: 10px;
+        }
+
+        #table,
+        #table td,
+        #table th {
+            border: 1px solid rgba(9, 17, 131, 0.842);
+            border-collapse: collapse;
+
+        }
+
+        #head th {
+            padding: 0px 50px;
+        }
+
+        #net_total {
+            color: rgb(9, 9, 172);
+        }
+    </style>
+</head>
+
+<script>
+    var arr = []
+    var arr_obj = []
+
+    function AddItem() {
+        var name = document.getElementById('name').value
+        var price = document.getElementById('price').value
+        var quantity = document.getElementById('quantity').value
+
+        var total = Number(price) * Number(quantity)
+        arr.push(total)
+        var net_total = arr.reduce((tot, num) => Number(tot) + Number(num))
+
+        arr_obj.push({
+            name: name,
+            price: price,
+            quantity: quantity,
+            total: total
+        })
+
+        var tr = ''
+
+        arr_obj.map((obj, i) => {
+            tr += `<tr>
+                <td>${obj.name}</td>
+                <td>${obj.price}</td>
+                <td>${obj.quantity}</td>
+                <td>${obj.total}</td>
+                </tr>`
+        })
+
+        document.getElementById('result').innerHTML = `<table id='table'>
+        <thead>
+        <th>Product name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        </thead> 
+        <tbody>
+            ${tr}
+        </tbody>`
+        document.getElementById('net_total').innerHTML = net_total
+        document.getElementById('name').value = ''
+        document.getElementById('price').value = ''
+        document.getElementById('quantity').value = ''
+    }
+
+
+
+</script>
+
+<body>
+    <h1>Market Billing System</h1>
+    <div id="flex">
+        <div id="form">
+            <h2>Add Product Item</h2>
+            <label>Product Name</label>
+            <input id="name" />
+            <label>Price</label>
+            <input id="price" />
+            <label>Quantity</label>
+            <input id="quantity" />
+            <button onclick="AddItem()">+ Add Item</button>
+        </div>
+        <div id="total">
+            <h2>Bill Details of total items</h2>
+            <h3>Your net amount is Rs. <span id="net_total">0</span></h3>
+        </div>
+
+    </div>
+    <div id="result"></div>
+
+</body>
+
+</html>
